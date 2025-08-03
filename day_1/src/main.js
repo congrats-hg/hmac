@@ -1,7 +1,7 @@
 // 비 - 한글 손 인터랙션 프로젝트
 import * as THREE from 'three';
-import { Hands } from '@mediapipe/hands';
-import { Camera } from '@mediapipe/camera_utils';
+// MediaPipe는 CDN에서 로드됨
+// Camera는 CDN에서 로드됨
 
 class RainInteraction {
   constructor() {
@@ -98,7 +98,7 @@ class RainInteraction {
   async setupHandDetection() {
     try {
       // MediaPipe Hands 초기화
-      this.hands = new Hands({
+      this.hands = new window.Hands({
         locateFile: (file) => {
           return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
         }
@@ -117,7 +117,7 @@ class RainInteraction {
 
       // 카메라 설정
       this.video = document.getElementById('video');
-      this.cameraUtils = new Camera(this.video, {
+      this.cameraUtils = new window.Camera(this.video, {
         onFrame: async () => {
           // 프레임 스킵으로 성능 최적화
           this.frameSkipCounter++;
