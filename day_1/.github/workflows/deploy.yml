@@ -1,9 +1,10 @@
-name: Deploy day_1 to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-    paths: [ 'day_1/**' ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -18,21 +19,16 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: 'day_1/package-lock.json'
         
     - name: Install dependencies
-      run: |
-        cd day_1
-        npm ci
+      run: npm ci
       
     - name: Build
-      run: |
-        cd day_1
-        npm run build
+      run: npm run build
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./day_1/dist
+        publish_dir: ./dist
